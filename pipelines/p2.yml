@@ -1,0 +1,16 @@
+version: 1
+description: ""
+parallel: 1
+properties:
+  auto_dependency: false
+jobs:
+- "dq_employee_info_present"
+- dq_employee_salary:
+    job_parameters:
+      a: "b"
+- type: "datastore"
+  name: "hudi1"
+  sql: "select * from test"
+  activities:
+  - "act1"
+  - "act2"

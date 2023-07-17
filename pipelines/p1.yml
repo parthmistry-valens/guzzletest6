@@ -1,0 +1,10 @@
+version: 1
+description: ""
+parallel: 1
+properties:
+  auto_dependency: false
+jobs:
+- "dq_employee_info_present"
+- "dq_employee_salary"
+- "rest_test1"
+- "extt1"

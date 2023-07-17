@@ -1,0 +1,26 @@
+version: 1
+job:
+  type: constraint_checks
+
+source:
+  endpoint: lo_hive
+  primary_keys:
+    - id
+  properties:
+    table: employee
+  grouping_columns:
+    - country
+
+validation_rules:
+  name_should_present:
+    sql: name != ''
+    constraint_data: concat('employee name is empty')
+    detail_check_enabled: true
+  gender_should_present:
+    sql: gender != ''
+    constraint_data: concat('gender is not specified')
+    detail_check_enabled: true
+  department_should_present:
+    sql: department != ''
+    constraint_data: concat('department is not present')
+    detail_check_enabled: true

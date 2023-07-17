@@ -1,0 +1,26 @@
+version: 1
+job:
+  type: ingestion
+
+source:
+  endpoint: lo_hdfs
+  properties:
+    source_file_pattern: employee/xml/employee.*.xml
+    format: xml
+
+schema:
+  schema_derivation_strategy: source
+  columns:
+    - name: system
+      transform_sql:
+        value: "'${system}'"
+      partition_column: true
+    - name: location
+      transform_sql:
+        value: "'${location}'"
+      partition_column: true
+
+target:
+  endpoint: lo_hive
+  properties:
+      table: employee

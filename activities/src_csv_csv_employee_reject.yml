@@ -1,0 +1,60 @@
+version: 1
+job:
+  type: ingestion
+
+source:
+  endpoint: lo_hdfs
+  source_schema_derivation_strategy: source
+  properties:
+    source_file_pattern: csv/employee/employee_data.*.csv
+    format: delimited
+    partial_load: true
+    format_properties:
+      contains_header: true
+      column_delimiter: ","
+
+schema:
+  schema_derivation_strategy: source
+  discard: true
+  strict_schema_check: true
+  columns:
+    - name: id
+      primary_key:
+        value: true
+      data_type:
+        value: int
+    - name: name
+      data_type:
+        value: varchar(20)
+    - name: gender
+      data_type:
+        value: varchar(6)
+    - name: salary
+      data_type:
+        value: int
+    - name: birthdate
+      data_type:
+        value: date
+    - name: createdtime
+      data_type:
+        value: timestamp
+
+target:
+  endpoint: lo_hdfs
+  properties:
+      path: employee/valid
+      format: delimited
+  partition_columns:
+    - name: system
+      value: ${system}
+      data_type: string
+    - name: location
+      value: ${location}
+      data_type: string
+
+reject:
+  endpoint: lo_hdfs
+  properties:
+    path: employee/invalid
+    format: delimited
+  failure_threshold: 90

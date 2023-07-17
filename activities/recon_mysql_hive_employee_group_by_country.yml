@@ -1,0 +1,28 @@
+version: 1
+job:
+  type: recon
+
+source:
+  endpoint: lo_jdbc
+  properties:
+    table: source_employee
+
+target:
+  endpoint: lo_hive
+  properties:
+    table: target_employee
+
+recon:
+  primary_keys:
+    - id
+  grouping_columns:
+    - country
+  recon_metrics:
+    number_of_employee:
+      source_aggregation: count(*)
+      target_aggregation: count(*)
+    salary_cost:
+      detail_check_enabled: true
+      target_aggregation: sum(salary)
+      source_aggregation: sum(salary)
+  partial_match: true

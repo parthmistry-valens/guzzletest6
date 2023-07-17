@@ -1,0 +1,23 @@
+version: 1
+job:
+  type: constraint_checks
+
+source:
+  endpoint: lo_hive
+  primary_keys:
+    - id
+  properties:
+    table: employee
+  grouping_columns:
+    - country
+
+validation_rules:
+  name_should_present:
+    sql: name != ''
+    detail_check_enabled: true
+  gender_should_present:
+    sql: gender != ''
+    detail_check_enabled: true
+  department_should_present:
+    sql: department != ''
+    detail_check_enabled: true

@@ -1,0 +1,32 @@
+version: 1
+job:
+  type: "ingestion"
+source:
+  endpoint: "file-s3"
+  properties:
+    source_file_pattern: "csv/tgt1.csv"
+    format: "delimited"
+    charset: "UTF-8"
+    partial_load: false
+    format_properties:
+      column_delimiter: ","
+      quote_delimiter: "\""
+      escape_char: "\\\\"
+      contains_header: true
+      infer_schema: false
+      clean_column_name: false
+      trim_white_space: "none"
+schema:
+  schema_derivation_strategy: "source"
+  strict_schema_check: true
+  discard: true
+target:
+  endpoint: "hudi1"
+  properties:
+    table: "hudi_tgt1"
+    auto_create_table: true
+    hudi_operation: "upsert"
+    pre_combine_field: "id"
+    primary_key: "id"
+    storage_type: "cow"
+  operation: "append"

@@ -1,0 +1,19 @@
+version: 1
+job:
+  type: "external"
+config:
+  endpoint: "lo_snowflake"
+  properties:
+    script: "abc"
+lineages:
+  source:
+  - endpoint: "file-s3"
+    properties:
+      source_file_pattern: ""
+  - endpoint: "lo_hdfs"
+    properties:
+      source_file_pattern: ""
+  target:
+  - endpoint: "lo_adls_gen2"
+    properties:
+      source_file_pattern: ""

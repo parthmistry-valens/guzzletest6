@@ -1,0 +1,25 @@
+version: 1
+job:
+  type: housekeeping
+
+housekeeping:
+  endpoint: lo_hive
+  housekeeping_column: order_date
+  retention_strategies:
+    - partitions:
+        - system: order
+        - location: US
+      retention_strategy: 5d, 2w, 1m, *q, *y
+      day_of_week: 6
+      strict_retention_period_end: false
+    - partitions:
+        - system: order
+        - location: CA
+      retention_strategy: 7d, *w, *m, *q, 1y
+      day_of_week: 6
+      strict_retention_period_end: false
+  operation: delete
+  reference_point:
+    reference_type: max_value
+  properties:
+    table: orders

@@ -1,0 +1,22 @@
+version: 1
+job:
+  type: "ingestion"
+source:
+  endpoint: "lo_rest"
+  properties:
+    format: "json"
+    charset: "UTF-8"
+    uri: "/uri1"
+    http_method: "get"
+    api_response_logical_endpoint: "lo_amazon_s3"
+    format_properties:
+      clean_column_name: false
+      multiline: false
+      primitives_as_string: false
+      sampling_ratio: 100
+    retry_interval: 5
+    timeout: 300
+schema:
+  schema_derivation_strategy: "source"
+  strict_schema_check: true
+  discard: true

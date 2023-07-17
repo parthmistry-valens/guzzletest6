@@ -1,0 +1,44 @@
+source:
+  endpoint: "lo_amazon_s3"
+  properties:
+    format: "delimited"
+    format_properties:
+      contains_header: true
+      column_delimiter: ","
+    source_file_pattern: "csv/employee/employee*.csv"
+    charset: "UTF-8"
+    partial_load: true
+job:
+  type: "ingestion"
+reject:
+  endpoint: "lo_hive"
+  properties:
+    table: "dq_employee"
+  failure_threshold: 50
+version: 1
+schema:
+  schema_derivation_strategy: "source"
+  columns:
+  - name: "instance_id"
+    data_type:
+      value: "bigint"
+    transform_sql:
+      value: "'${job_instance_id}'"
+    partition_column: true
+  - name: "system"
+    data_type:
+      value: "string"
+    transform_sql:
+      value: "'${system}'"
+    partition_column: true
+  - name: "location"
+    data_type:
+      value: "string"
+    transform_sql:
+      value: "'${location}'"
+    partition_column: true
+target:
+  endpoint: "lo_hive"
+  properties:
+    table: "employee"
+  operation: "append"

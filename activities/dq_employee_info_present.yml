@@ -1,0 +1,19 @@
+version: 1
+job:
+  type: "constraint_checks"
+source:
+  endpoint: "lo_sql_server"
+  primary_keys:
+  - "id"
+  properties:
+    table: "employee"
+validation_rules:
+  department_should_present:
+    sql: "department != ''"
+    detail_check_enabled: true
+  gender_should_present:
+    sql: "gender != ''"
+    detail_check_enabled: true
+  name_should_present:
+    sql: "name != ''"
+    detail_check_enabled: true

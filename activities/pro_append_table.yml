@@ -1,0 +1,13 @@
+version: 1
+job:
+  type: "processing"
+source:
+  endpoint: "lo_delta"
+  properties:
+    table: "source_employee"
+target:
+  endpoint: "lo_delta"
+  properties:
+    table: "target_employee"
+    template: "delta"
+  operation: "append"

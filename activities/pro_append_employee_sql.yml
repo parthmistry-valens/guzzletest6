@@ -1,0 +1,23 @@
+version: 1
+job:
+  type: processing
+
+source:
+  endpoint: lo_hive
+  properties:
+    sql: select * from guzzle_test.source_employee
+  additional_columns:
+    - name: created_time
+      framework_column: w_created_ts
+      framework_generated: false
+    - name: updated_time
+      framework_column: w_refresh_ts
+      framework_generated: false
+    - name: is_record_present
+      framework_column: w_current_record_flag
+
+target:
+  endpoint: lo_hive
+  properties:
+    table: target_employee
+  operation: append

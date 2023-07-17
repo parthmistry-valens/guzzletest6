@@ -1,0 +1,19 @@
+version: 1
+job:
+  type: housekeeping
+
+housekeeping:
+  endpoint: lo_hive
+  housekeeping_column: order_date
+  retention_strategies:
+    - partitions:
+        - system: order
+        - location: "*"
+      retention_strategy: 5d, *w, *m, *q, *y
+  operation: move
+  reference_point:
+    reference_type: value
+    value: ${order_date}
+  properties:
+    table: orders
+    secondary_table: old_order
