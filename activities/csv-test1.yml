@@ -4,7 +4,7 @@ job:
 source:
   endpoint: "file-s3"
   properties:
-    source_file_pattern: "csv/*.csv"
+    source_file_pattern: "csv/branch.csv"
     format: "delimited"
     charset: "UTF-8"
     partial_load: false
